@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
-import { Todo } from '../model/todo';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { LoggerService } from '../../services/logger.service';
+import { Todo, TodoStatus } from '../model/todo';
 
 let n = 1;
 
@@ -10,7 +10,20 @@ let n = 1;
 export class TodoService {
   private loggerService = inject(LoggerService);
 
-  private todos: Todo[] = [];
+  todos = signal<Todo[]>([]);
+  waitingTodos = computed(() =>
+    this.todos().filter((todo) => todo.status === 'waiting')
+  );
+  inProgressTodos = computed(() =>
+    this.todos().filter((todo) => todo.status === 'in progress')
+  );
+  doneTodos = computed(() =>
+    this.todos().filter((todo) => todo.status === 'done')
+  );
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+  constructor() {}
 
   /**
    * elle retourne la liste des todos
@@ -18,7 +31,7 @@ export class TodoService {
    * @returns Todo[]
    */
   getTodos(): Todo[] {
-    return this.todos;
+    return this.todos();
   }
 
   /**
@@ -28,9 +41,18 @@ export class TodoService {
    *
    */
   addTodo(todo: Todo): void {
-    this.todos.push(todo);
+    this.todos.update((todos) => [...todos, todo]);
   }
 
+  updateTodo(existingTodo: Todo, updatedTodo: Todo) {
+    const todos = this.todos();
+    //const index = todos.findIndex(t => t === existingTodo);
+    const index = todos.findIndex(t => t.id === existingTodo.id);
+    if (index > -1) {
+      todos[index] = { ...existingTodo, ...updatedTodo }; 
+      this.todos.set([...todos]); // Update the signal 
+    }
+  }
   /**
    * Delete le todo s'il existe
    *
@@ -38,12 +60,43 @@ export class TodoService {
    * @returns boolean
    */
   deleteTodo(todo: Todo): boolean {
-    const index = this.todos.indexOf(todo);
+    const index = this.todos().indexOf(todo);
     if (index > -1) {
-      this.todos.splice(index, 1);
+      this.todos.update((todos) => todos.filter((t) => t !== todo));
       return true;
     }
     return false;
+  }
+
+  getNextStatus(todo: Todo): TodoStatus | null {
+    if (todo.status === 'waiting') {
+      return 'in progress';
+    } else if (todo.status === 'in progress') {
+      return 'done';
+    }
+    return null;
+  }
+
+  changeNextStatus(todo: Todo): void {
+    const nextStatus = this.getNextStatus(todo);
+    if (nextStatus) {
+      this.todos.update((todos) =>
+        todos.map((t) => (t === todo ? { ...t, status: nextStatus } : t))
+      );
+    }
+  }
+
+  getByStatus(status: TodoStatus): Todo[] {
+    switch (status) {
+      case 'waiting':
+        return this.waitingTodos();
+      case 'in progress':
+        return this.inProgressTodos();
+      case 'done':
+        return this.doneTodos();
+      default:
+        return [];
+    }
   }
 
   /**

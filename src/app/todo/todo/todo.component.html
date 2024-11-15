@@ -1,18 +1,98 @@
-<div class="row">
-  <div class="col">
-    <ol class="list-group">
-      @for (todo of todos; track todo) {
-        <li class="list-group-item">
-          {{todo.name}} : {{todo.content}}
-          <i (click)="deleteTodo(todo)" class="fa fa-trash" aria-hidden="true"></i>
-        </li>
+<div class="row bg-light p-3 mb-2">
+  <div class="d-flex flex-row">
+    <div class="p-2">
+      <input
+      [(ngModel)]="todo.name"
+      type="text"
+      class="form-control"
+      placeholder="name"
+    /></div>
+    <div class="p-2">
+      <input
+      [(ngModel)]="todo.content"
+      type="text"
+      class="form-control"
+      placeholder="content"
+    />
+    </div>
+    <div class="p-1"><button
+      (click)="addTodo()"
+      [disabled]="!todo.name.trim() || !todo.content.trim()"
+      class="btn btn-danger m-1"
+    >
+      add
+    </button></div>
+    
+    
+    
+  </div>
+
+  <div class="container">
+    <div class="row">
+    <ol class="col-sm list-group  gap-3">
+
+      <div class=" bg-primary text-white p-1">Waiting Todos</div>
+      @for (todo of getByStatus('waiting'); track todo) {
+      <li class="list-group-item d-flex align-items-center justify-content-between">
+        {{ todo.name }} : {{ todo.content }}
+        <div class="d-flex align-items-center justify-content-between ">
+
+        <div class="text-primary p-2" >
+          <i
+          (click)="editTodo(todo)"
+          class="fa fa-pencil"
+          aria-hidden="true"
+        ></i></div>
+        <div class="text-danger p-2" >
+          
+          <i
+          (click)="deleteTodo(todo)"
+          class="fa fa-trash"
+          aria-hidden="true"
+        ></i>
+        </div>
+      
+        <button (click)="changeNextStatus(todo)" class="btn btn-success">
+          next
+        </button>
+      </div>
+      </li>
+
+      }
+    </ol>
+    <ol class="col-sm list-group">
+      <div class="bg-warning p-1">In progress</div>
+      @for (todo of getByStatus('in progress'); track todo) {
+      <li class="list-group-item d-flex align-items-center justify-content-between">
+        {{ todo.name }} : {{ todo.content }}
+        <div class="d-flex align-items-center justify-content-between ">
+        <div class="text-danger p-2" >
+          <i
+          (click)="deleteTodo(todo)"
+          class="fa fa-trash"
+          aria-hidden="true"
+        ></i></div>
+        <button (click)="changeNextStatus(todo)" class="btn btn-success">
+          next
+        </button>
+      </div>
+      </li>
+      }
+    </ol>
+    <ol class="col-sm list-group ">
+      <div class="text-white bg-success p-1" >Done</div>
+      @for (todo of getByStatus('done'); track todo) {
+      <li class="list-group-item px-5 d-flex align-items-center justify-content-between">
+        {{ todo.name }} : {{ todo.content }}
+        <div class="text-danger p-2" >
+          <i
+          (click)="deleteTodo(todo)"
+          class="fa fa-trash"
+          aria-hidden="true"
+        ></i></div>
+      </li>
       }
     </ol>
   </div>
-  <div class="col">
-    name: <input [(ngModel)]="todo.name" type="text" class="form-control">
-    content: <input [(ngModel)]="todo.content" type="text" class="form-control">
-    <button (click)="addTodo()" [disabled]="!todo.name.trim() || !todo.content.trim()"
-    class="btn btn-primary m-2">add</button>
-  </div>
+</div>
 </div>
