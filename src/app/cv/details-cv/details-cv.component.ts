@@ -43,6 +43,6 @@ export class DetailsCvComponent implements OnInit {
         );
         return throwError(() => {new Error(e)});
       }),
-    );
+    ).subscribe();
   }
 }
