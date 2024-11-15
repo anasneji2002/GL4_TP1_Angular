@@ -7,13 +7,14 @@ import { APP_ROUTES } from '../../../config/routes.config';
 import { AuthService } from '../../auth/services/auth.service';
 
 import { DefaultImagePipe } from '../pipes/default-image.pipe';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-details-cv',
     templateUrl: './details-cv.component.html',
     styleUrls: ['./details-cv.component.css'],
     standalone: true,
-    imports: [DefaultImagePipe],
+    imports: [DefaultImagePipe,CommonModule],
 })
 export class DetailsCvComponent implements OnInit {
   private cvService = inject(CvService);
@@ -23,6 +24,10 @@ export class DetailsCvComponent implements OnInit {
   authService = inject(AuthService);
 
   cv: Cv | null = null;
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+  constructor() {}
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];

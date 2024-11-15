@@ -30,6 +30,9 @@ export class CvComponent {
   /*   selectedCv: Cv | null = null; */
   date = new Date();
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   constructor() {
     this.cvService.getCvs().subscribe({
       next: (cvs) => {

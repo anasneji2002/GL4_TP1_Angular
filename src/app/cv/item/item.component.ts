@@ -1,21 +1,20 @@
-import { Component, Input, Output, EventEmitter, inject } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { Cv } from "../model/cv";
 import { CvService } from "../services/cv.service";
-import { NgStyle } from "@angular/common";
-import { DefaultImagePipe } from "../pipes/default-image.pipe";
+import { DefaultImagePipe } from '../pipes/default-image.pipe';
+import { CommonModule } from "@angular/common";
 
 @Component({
-    selector: "app-item",
-    templateUrl: "./item.component.html",
-    styleUrls: ["./item.component.css"],
-    standalone: true,
-    imports: [NgStyle, DefaultImagePipe],
+  selector: "app-item",
+  templateUrl: "./item.component.html",
+  styleUrls: ["./item.component.css"],
+  standalone:true,
+  imports:[DefaultImagePipe,CommonModule]
 })
 export class ItemComponent {
-  private cvService = inject(CvService);
-
   @Input({ required: true }) cv!: Cv;
   @Input() size = 50;
+  constructor(private cvService: CvService) {}
 
   onSelectCv() {
     this.cvService.selectCv(this.cv);
