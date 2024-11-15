@@ -27,10 +27,8 @@ export class CvComponent {
 
   cvs: Cv[] = [];
   selectedCv: Cv | null = null;
-  /*   selectedCv: Cv | null = null; */
   date = new Date();
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);
 
   constructor() {
