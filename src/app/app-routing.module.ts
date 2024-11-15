@@ -13,6 +13,7 @@ import { CvComponent } from "./cv/cv/cv.component";
 import { DetailsCvComponent } from "./cv/details-cv/details-cv.component";
 import { RhComponent } from "./optimizationPattern/rh/rh.component";
 import { TestRainbowWritingDirectiveComponent } from "./components/test-rainbowWritingDirective/test-rainbow-writing-directive/test-rainbow-writing-directive.component";
+import { TtcCalculatorComponent } from "./components/ttcCalculator/ttc-calculator/ttc-calculator.component";
 
 const routes: Route[] = [
   { path: "login", component: LoginComponent },
@@ -37,6 +38,8 @@ const routes: Route[] = [
     children: [{ path: "color", component: ColorComponent }],
   },
   { path: "rainbow-writing-directive", component: TestRainbowWritingDirectiveComponent},
+  { path: "ttc", component: TtcCalculatorComponent},
+
   { path: "**", component: NF404Component },
 ];
 
