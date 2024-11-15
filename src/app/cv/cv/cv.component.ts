@@ -27,8 +27,9 @@ export class CvComponent {
 
   cvs: Cv[] = [];
   selectedCv: Cv | null = null;
-  /*   selectedCv: Cv | null = null; */
   date = new Date();
+
+  constructor(...args: unknown[]);
 
   constructor() {
     this.cvService.getCvs().subscribe({

@@ -6,6 +6,7 @@ import { ToastrService } from "ngx-toastr";
 import { APP_ROUTES } from "src/config/routes.config";
 import { Cv } from "../model/cv";
 import { JsonPipe } from "@angular/common";
+import { CommonModule } from "@angular/common";
 
 @Component({
     selector: "app-add-cv",
@@ -15,7 +16,8 @@ import { JsonPipe } from "@angular/common";
     imports: [
     FormsModule,
     ReactiveFormsModule,
-    JsonPipe
+    JsonPipe,
+    CommonModule,
 ],
 })
 export class AddCvComponent {
@@ -24,6 +26,10 @@ export class AddCvComponent {
   private toastr = inject(ToastrService);
   private formBuilder = inject(FormBuilder);
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   form = this.formBuilder.group(
     {
