@@ -1,4 +1,4 @@
-import { Component, Input, inject, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, Input, inject, Signal, signal, WritableSignal, input } from '@angular/core';
 import { Cv } from '../model/cv';
 import { EmbaucheService } from '../services/embauche.service';
 import { ToastrService } from 'ngx-toastr';
@@ -7,22 +7,22 @@ import { RouterLink } from '@angular/router';
 import { DefaultImagePipe } from '../pipes/default-image.pipe';
 
 @Component({
-    selector: 'app-cv-card',
-    templateUrl: './cv-card.component.html',
-    styleUrls: ['./cv-card.component.css'],
-    standalone: true,
-    imports: [
+  selector: 'app-cv-card',
+  templateUrl: './cv-card.component.html',
+  styleUrls: ['./cv-card.component.css'],
+  standalone: true,
+  imports: [
     RouterLink,
     DefaultImagePipe
-],
+  ],
 })
 export class CvCardComponent {
   private embaucheService = inject(EmbaucheService);
   private toastr = inject(ToastrService);
-  constructor() {}
-  @Input() cv!: WritableSignal<Cv |null> ;
+  constructor() { }
+  cv = input.required<Cv | null>();
 
-  ngOnInit() {}
+  ngOnInit() { }
   embaucher() {
     if (this.cv()) {
       if (this.embaucheService.embauche(this.cv)) {

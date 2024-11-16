@@ -1,9 +1,9 @@
-import { Injectable, inject} from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Cv } from "../model/cv";
 import { Observable } from "rxjs";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { API } from "../../../config/api.config";
-import {signal, WritableSignal } from "@angular/core";
+import { signal, WritableSignal, Signal } from "@angular/core";
 
 @Injectable({
   providedIn: "root",
@@ -19,16 +19,10 @@ export class CvService {
   /**
    * Le signal permettant de créer le flux des cvs sélectionnés
    */
-  private selectedCvSignal: WritableSignal<Cv | null> = signal(null);
+  #selectedCv: WritableSignal<Cv | null> = signal(null);
+  selectedCv = this.#selectedCv.asReadonly();
 
-  /**
-   * Le flux des cvs sélectionnés
-   */
-  get selectCv$(): Cv | null {
-    return this.selectedCvSignal();
-  }
-
-  constructor() {}
+  constructor() { }
 
   /**
    *
@@ -136,6 +130,6 @@ export class CvService {
    * @param cv : Le cv à ajouter dans le flux des cvs sélectionnés
    */
   selectCv(cv: Cv) {
-    this.selectedCvSignal.set(cv);
+    this.#selectedCv.set(cv);
   }
 }
