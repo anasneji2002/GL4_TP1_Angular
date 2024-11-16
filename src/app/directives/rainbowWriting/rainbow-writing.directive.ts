@@ -8,7 +8,7 @@ import { fromEvent } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Directive({
-  selector: '[appRainbowWriting]',
+  selector: 'input[appRainbowWriting]',
   standalone: true
 })
 export class RainbowWritingDirective {
@@ -30,10 +30,6 @@ export class RainbowWritingDirective {
   }
 
   private initRainbowEffect(): void {
-    if (!(this.el.nativeElement instanceof HTMLInputElement)) {
-      console.error(`cette directive ne peut etre utilisé pour l element de type ${this.el.nativeElement}.`);
-      return;
-    }
     const keyup$ = fromEvent(this.el.nativeElement, 'keyup');
 
     keyup$
