@@ -11,7 +11,7 @@ import { catchError, Observable, of } from "rxjs";
 })
 export class CvComponent {
   cvs$:Observable<Cv[]> = this.cvService.getCvs();
-  selectedCv$: Observable<Cv> ;
+  selectedCv$: Observable<Cv>=this.cvService.selectCv$ ;
   /*   selectedCv: Cv | null = null; */
   date = new Date();
 
@@ -20,7 +20,7 @@ export class CvComponent {
     private toastr: ToastrService,
     private cvService: CvService
   ) {
-    this.cvs$=this.cvService.getCvs().pipe(
+    this.cvs$.pipe(
       catchError(()=>{
        
         this.toastr.error(`
@@ -31,6 +31,6 @@ export class CvComponent {
     }));
     this.logger.logger("je suis le cvComponent");
     this.toastr.info("Bienvenu dans notre CvTech");
-    this.selectedCv$=this.cvService.selectCv$;
+    
   }
 }

@@ -13,7 +13,7 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
   styleUrls: ['./details-cv.component.css'],
 })
 export class DetailsCvComponent implements OnInit {
-  cv$: Observable<Cv> | null = null;
+  cv$: Observable<Cv> | null = null ;
   constructor(
     private cvService: CvService,
     private router: Router,
