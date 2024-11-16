@@ -45,9 +45,7 @@
             <div class="d-flex align-items-center justify-content-between">
               <!-- Show pencil and next button only if the status is not "done" -->
               <div class="d-flex align-items-center" *ngIf="status !== 'done'">
-                <div class="text-primary p-2">
-                  
-                </div>
+                
                 <button (click)="changeNextStatus(todo)" class="btn btn-success">
                   Next
                 </button>
