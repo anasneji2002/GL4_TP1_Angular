@@ -6,7 +6,7 @@ import { Signal,WritableSignal } from '@angular/core';
   providedIn: 'root',
 })
 export class EmbaucheService {
-  private embauchees: WritableSignal<Cv[]> = signal([]);
+  embauchees: WritableSignal<Cv[]> =signal([]);
 
   constructor() {}
 

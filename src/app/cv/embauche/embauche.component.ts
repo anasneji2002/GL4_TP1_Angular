@@ -1,4 +1,4 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, signal, WritableSignal, Signal } from '@angular/core';
 import { EmbaucheService } from '../services/embauche.service';
 import { Cv } from '../model/cv';
 
@@ -16,8 +16,12 @@ import { ItemComponent } from '../item/item.component';
 export class EmbaucheComponent {
   private embaucheService = inject(EmbaucheService);
 
-  public embauchees: WritableSignal<Cv[]> = signal([]);
+  public embauchees: Signal<Cv[]> ;
   constructor() {
-    this.embauchees.set(this.embaucheService.getEmbauchees()());
+    //this.embauchees.set(this.embaucheService.getEmbauchees()());
+    this.embauchees = computed(()=>
+      {
+        return this.embaucheService.embauchees();
+      });
   }
 }
