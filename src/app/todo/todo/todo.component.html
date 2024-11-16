@@ -1,18 +1,69 @@
-<div class="row">
-  <div class="col">
-    <ol class="list-group">
-      @for (todo of todos; track todo) {
-        <li class="list-group-item">
-          {{todo.name}} : {{todo.content}}
-          <i (click)="deleteTodo(todo)" class="fa fa-trash" aria-hidden="true"></i>
-        </li>
-      }
-    </ol>
+<div class="row bg-light p-3 mb-2">
+  <div class="d-flex flex-row">
+    <div class="p-2">
+      <input
+      [(ngModel)]="todo.name"
+      type="text"
+      class="form-control"
+      placeholder="name"
+    /></div>
+    <div class="p-2">
+      <input
+      [(ngModel)]="todo.content"
+      type="text"
+      class="form-control"
+      placeholder="content"
+    />
+    </div>
+    <div class="p-1"><button
+      (click)="addTodo()"
+      [disabled]="!todo.name.trim() || !todo.content.trim()"
+      class="btn btn-danger m-1"
+    >
+      add
+    </button></div>
+    
+    
+    
   </div>
-  <div class="col">
-    name: <input [(ngModel)]="todo.name" type="text" class="form-control">
-    content: <input [(ngModel)]="todo.content" type="text" class="form-control">
-    <button (click)="addTodo()" [disabled]="!todo.name.trim() || !todo.content.trim()"
-    class="btn btn-primary m-2">add</button>
+
+  <div class="container">
+    <div class="row">
+      <!-- Loop through each status -->
+      <div class="col-sm" *ngFor="let status of statuses">
+        <div [ngClass]="getStatusClass(status)" class="p-1">
+          <strong>{{ status | titlecase }} Todos</strong>
+        </div>
+  
+        <ol class="list-group">
+          <!-- Loop through each todo in the status -->
+          <li
+            *ngFor="let todo of getByStatus(status)"
+            class="list-group-item d-flex align-items-center justify-content-between"
+          >
+            {{ todo.name }} : {{ todo.content }}
+            <div class="d-flex align-items-center justify-content-between">
+              <!-- Show pencil and next button only if the status is not "done" -->
+              <div class="d-flex align-items-center" *ngIf="status !== 'done'">
+                
+                <button (click)="changeNextStatus(todo)" class="btn btn-success">
+                  Next
+                </button>
+              </div>
+              <!-- Trash icon (always visible) -->
+              <div class="text-danger p-2">
+                <i
+                  (click)="deleteTodo(todo)"
+                  class="fa fa-trash"
+                  aria-hidden="true"
+                ></i>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
   </div>
 </div>
+
+
