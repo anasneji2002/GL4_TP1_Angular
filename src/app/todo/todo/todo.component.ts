@@ -17,7 +17,6 @@ export class TodoComponent {
 
   todos: Todo[] = [];
   todo = new Todo();
-  editingTodo: Todo | null = null; // Track the todo being edited
   statuses: TodoStatus[] = ['waiting', 'in progress', 'done'];
 
   /** Inserted by Angular inject() migration for backwards compatibility */
@@ -50,17 +49,6 @@ export class TodoComponent {
     this.todo = new Todo();
   }
   
-  editTodo(todo: Todo) {
-    this.editingTodo = { ...todo };
-    if (this.editingTodo) {
-      const originalTodo = this.todos.find(t => t.id === this.editingTodo?.id);
-      if (originalTodo) {
-        this.todoService.updateTodo(originalTodo, this.editingTodo);
-      }
-      this.editingTodo = null; // Exit edit mode
-    }
-  }
-
 
   changeNextStatus(todo: Todo) {
     this.todoService.changeNextStatus(todo);

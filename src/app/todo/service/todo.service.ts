@@ -3,7 +3,7 @@ import { LoggerService } from '../../services/logger.service';
 import { Todo, TodoStatus } from '../model/todo';
 
 let n = 1;
-
+// set provided in to 
 @Injectable({
   providedIn: 'root',
 })
@@ -44,15 +44,6 @@ export class TodoService {
     this.todos.update((todos) => [...todos, todo]);
   }
 
-  updateTodo(existingTodo: Todo, updatedTodo: Todo) {
-    const todos = this.todos();
-    //const index = todos.findIndex(t => t === existingTodo);
-    const index = todos.findIndex(t => t.id === existingTodo.id);
-    if (index > -1) {
-      todos[index] = { ...existingTodo, ...updatedTodo }; 
-      this.todos.set([...todos]); // Update the signal 
-    }
-  }
   /**
    * Delete le todo s'il existe
    *
@@ -62,6 +53,7 @@ export class TodoService {
   deleteTodo(todo: Todo): boolean {
     const index = this.todos().indexOf(todo);
     if (index > -1) {
+      // check how Js compare objects '!=='
       this.todos.update((todos) => todos.filter((t) => t !== todo));
       return true;
     }

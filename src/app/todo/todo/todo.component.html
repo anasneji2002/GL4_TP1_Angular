@@ -46,11 +46,7 @@
               <!-- Show pencil and next button only if the status is not "done" -->
               <div class="d-flex align-items-center" *ngIf="status !== 'done'">
                 <div class="text-primary p-2">
-                  <i
-                    (click)="editTodo(todo)"
-                    class="fa fa-pencil"
-                    aria-hidden="true"
-                  ></i>
+                  
                 </div>
                 <button (click)="changeNextStatus(todo)" class="btn btn-success">
                   Next
