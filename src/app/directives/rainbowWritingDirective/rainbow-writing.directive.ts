@@ -8,7 +8,7 @@ import {
 import { signal, effect } from '@angular/core';
 
 @Directive({
-  selector: '[appRainbowWriting]',
+  selector: 'input[appRainbowWriting]',
   standalone: true
 })
 export class RainbowWritingDirective {
@@ -33,11 +33,6 @@ export class RainbowWritingDirective {
   }
 
   private initRainbowEffect(): void {
-    if (!(this.el.nativeElement instanceof HTMLInputElement)) {
-      console.error(`cette directive ne peut pas etre appliquée à ${this.el.nativeElement}.`);
-      return;
-    }
-
     effect(() => {
       const currentColor = this.color();
       this.textColor = currentColor;
