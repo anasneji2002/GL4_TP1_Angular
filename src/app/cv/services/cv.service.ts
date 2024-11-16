@@ -19,8 +19,8 @@ export class CvService {
   /**
    * Le signal permettant de créer le flux des cvs sélectionnés
    */
-  #selectedCv: WritableSignal<Cv | null> = signal(null);
-  selectedCv = this.#selectedCv.asReadonly();
+  selectedCv: WritableSignal<Cv | null> = signal(null);
+  //selectedCv = this.#selectedCv;
 
   constructor() { }
 
@@ -130,6 +130,6 @@ export class CvService {
    * @param cv : Le cv à ajouter dans le flux des cvs sélectionnés
    */
   selectCv(cv: Cv) {
-    this.#selectedCv.set(cv);
+    this.selectedCv.set(cv);
   }
 }

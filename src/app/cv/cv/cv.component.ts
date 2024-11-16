@@ -7,7 +7,7 @@ import { ListComponent } from '../list/list.component';
 import { CvCardComponent } from '../cv-card/cv-card.component';
 import { EmbaucheComponent } from '../embauche/embauche.component';
 import { UpperCasePipe, DatePipe } from '@angular/common';
-import {signal, WritableSignal } from "@angular/core";
+import {signal, WritableSignal ,Signal,computed } from "@angular/core";
 
 @Component({
   selector: 'app-cv',
@@ -28,11 +28,17 @@ export class CvComponent {
   private cvService = inject(CvService);
 
   cvs: WritableSignal<Cv[]> =signal([]);
-  selectedCv= this.cvService.selectedCv;
+
+  selectedCv: Signal<Cv | null> ;
   
   /*   selectedCv: Cv | null = null; */
   date = new Date();
   constructor() {
+    this.selectedCv = computed(()=>
+      {
+        return this.cvService.selectedCv();
+      });
+
     this.cvService.getCvs().subscribe({
       next: (cvs) => {
         this.cvs.set(cvs);
