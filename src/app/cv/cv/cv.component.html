@@ -3,7 +3,18 @@
     <div class="alert alert-warning">
       {{ date | date : "full" | uppercase }}
     </div>
-    <app-list [cvs]="cvs$ | async"></app-list>
+    
+    <button (click)="showJunior()" > Juniors</button>
+    <button (click)="showSenior()" > Seniors</button>
+    @if (
+      show
+    ) {
+      <app-list [cvs]="juniorCvs$ | async"></app-list>
+    }@else {
+      <app-list [cvs]="seniorCvs$ | async"></app-list>
+    }
+    
+    
   </div>
   <div class="col">
     <app-cv-card [cv]="selectedCv$ | async"></app-cv-card>
