@@ -1,3 +1,33 @@
-<form [formGroup]="form">
-  <input type="text" class="form-control" formControlName="search" />
+<form [formGroup]="form" class="autocomplete-container">
+  <!-- Search Input Field -->
+  <input
+    type="text"
+    class="form-control"
+    formControlName="search"
+    placeholder="Search by name"
+  />
+
+
+  <!-- Suggestions List -->
+   @if(filteredCvs.length){
+    <ol class="list-group">
+    @for (cv of filteredCvs; track $index) {
+      <li
+    
+      
+      class="list-group-item"
+    >
+    <a href="/cv/{{cv.id}}">
+    <app-item [cv]="cv"></app-item>
+  </a>
+    </li>
+    
+    }
+  </ol>
+    
+    
+   }
+  
+
+ 
 </form>

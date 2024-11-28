@@ -4,10 +4,14 @@ import { LoggerService } from "../../services/logger.service";
 import { ToastrService } from "ngx-toastr";
 import { CvService } from "../services/cv.service";
 import { catchError, Observable, of, shareReplay,filter,map } from "rxjs";
+//import { AutocompleteComponent } from "../autocomplete/autocomplete.component";
+
 @Component({
+  
   selector: "app-cv",
   templateUrl: "./cv.component.html",
   styleUrls: ["./cv.component.css"],
+  
 })
 export class CvComponent {
   cvs$:Observable<Cv[]> ;
