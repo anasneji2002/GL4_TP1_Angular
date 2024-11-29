@@ -28,6 +28,14 @@
           routerLinkActive="active text-primary"
           >Home</a
         >
+
+        <a
+        class="nav-link"
+        [routerLink]="['master-details-cv']"
+        routerLinkActive="active text-primary"
+        >Master Details CVs</a
+        >
+
         <a
           class="nav-link"
           [routerLinkActiveOptions]="{ exact: true }"
@@ -35,6 +43,7 @@
           routerLinkActive="active text-primary"
           >Cv</a
         >
+
         <a
           *ngIf="authService.isAuthenticated()"
           class="nav-link"
