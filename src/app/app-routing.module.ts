@@ -38,7 +38,7 @@ const routes: Route[] = [
     children: [{ path: "color", component: ColorComponent }],
   },
   { path: "test-rainbow-writing", component: TestRainbowWritingComponent},
-  { path: APP_ROUTES.products, component: ProductsComponent },
+  { path: APP_ROUTES.products, component: ProductsComponent }, 
   { path: "**", component: NF404Component },
 ];
 

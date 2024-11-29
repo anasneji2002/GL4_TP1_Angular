@@ -66,4 +66,5 @@ export class ProductsComponent {
     const { limit, skip } = this.settingSubject.value;
     this.settingSubject.next({ limit, skip: skip + limit });
   }
-}
+} 
+

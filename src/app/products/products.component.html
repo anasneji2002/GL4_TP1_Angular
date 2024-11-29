@@ -3,7 +3,12 @@
     Product Number: {{ productsList.length }}
   </div>
   <!-- Load More Button -->
-  <button *ngIf="productsList.length > 0" (click)="loadMore()" class="btn btn-primary mt-3">
+  <button
+    *ngIf="productsList.length > 0"
+    (click)="loadMore()"
+    class="btn btn-primary mt-3"
+    [disabled]="productsList.length >= totalProducts"
+  >
     More Products
   </button>
   <!-- No More Products Alert -->
@@ -23,7 +28,7 @@
       <div>{{ product.title }}</div>
     </div>
   </div>
-
+ 
 </ng-container>
 
 <!-- Loading Template -->
