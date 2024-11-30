@@ -1,5 +1,5 @@
 <form [formGroup]="form" class="autocomplete-container">
-  <!-- Search Input Field -->
+  <!-- Input -->
   <input
     type="text"
     class="form-control"
@@ -7,9 +7,20 @@
     placeholder="Search by name"
   />
 
+  <!-- affichage liste recherche si length sup à 0 -->
+  <ol class="list-group" *ngIf="(filteredCvs$ | async) as filteredCvs">
+    <li *ngFor="let cv of filteredCvs" class="list-group-item">
+      <a href="/cv/{{cv.id}}">
+        <app-item [cv]="cv"></app-item>
+      </a>
+    </li>
+  </ol>
 
-  <!-- Suggestions List -->
-   @if(filteredCvs.length){
+  <!-- using subscribe -->
+
+  
+  <!-- 
+  @if(filteredCvs.length){
     <ol class="list-group">
     @for (cv of filteredCvs; track $index) {
       <li
@@ -24,10 +35,6 @@
     
     }
   </ol>
-    
-    
-   }
-  
-
- 
+  -->
 </form>
+
