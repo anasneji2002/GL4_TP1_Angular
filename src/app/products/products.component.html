@@ -1,18 +1,42 @@
-<ng-container
-  *ngIf="(products$ | async) as productsList, else loading"
->
-<button class="btn btn-primary"> More Products</button>
-<div class="alert alert-warning">
-  Product Number: {{productsList?.length}}
-</div>
-<div class="row">
-  <div class="col-4" *ngFor="let product of productsList">
-    <img class="rounded-circle" src="{{product.thumbnail}}" width="150px" height="150px">
-    {{product.title}}
+<ng-container *ngIf="(products$ | async) as productsList; else loading">
+  <div class="alert alert-warning">
+    Product Number: {{ productsList.length }}
   </div>
-</div>
+  <!-- Load More Button -->
+  <button
+    *ngIf="productsList.length > 0"
+    (click)="loadMore()"
+    class="btn btn-primary mt-3"
+    [disabled]="productsList.length >= totalProducts"
+  >
+    More Products
+  </button>
+  <!-- No More Products Alert -->
+  <div *ngIf="productsList.length === 0" class="alert alert-danger mt-3">
+    No products available.
+  </div>
+  <!-- Product List -->
+  <div class="row">
+    <div class="col-4" *ngFor="let product of productsList">
+      <img
+        class="rounded-circle"
+        [src]="product.thumbnail"
+        width="150px"
+        height="150px"
+        alt="{{ product.title }}"
+      />
+      <div>{{ product.title }}</div>
+    </div>
+  </div>
+ 
 </ng-container>
 
+<!-- Loading Template -->
 <ng-template #loading>
-  Loading...
+  <div class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>Loading products...</p>
+  </div>
 </ng-template>

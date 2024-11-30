@@ -10,6 +10,8 @@ import { NF404Component } from "./components/nf404/nf404.component";
 import { RhComponent } from "./optimizationPattern/rh/rh.component";
 import { TestRainbowWritingComponent } from "./components/test-rainbow-writing/test-rainbow-writing.component";
 import { CustomPreloadingStrategy } from "./custom-preloading.strategy";
+import { APP_ROUTES } from 'src/config/routes.config';
+import { ProductsComponent } from './products/products.component';
 
 const routes: Route[] = [
   { path: "login", component: LoginComponent },
@@ -36,6 +38,7 @@ const routes: Route[] = [
     children: [{ path: "color", component: ColorComponent }],
   },
   { path: "test-rainbow-writing", component: TestRainbowWritingComponent},
+  { path: APP_ROUTES.products, component: ProductsComponent }, 
   { path: "**", component: NF404Component },
 ];
 
