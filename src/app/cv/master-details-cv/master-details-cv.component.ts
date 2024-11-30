@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CvService } from '../services/cv.service';
 import { Cv } from '../model/cv';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -25,6 +26,11 @@ export class MasterDetailsCvComponent implements OnInit {
         return of(this.cvService.getFakeCvs());
       })
     );
+    this.cvService.selectCv$
+    .pipe(takeUntilDestroyed())
+    .subscribe({
+      next: cv => this.goToCvDetails(cv)
+    })
   }
 
   ngOnInit() {}
