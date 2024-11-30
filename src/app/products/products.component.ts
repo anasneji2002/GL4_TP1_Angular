@@ -22,23 +22,21 @@ import { Settings } from './dto/product-settings.dto';
 export class ProductsComponent {
   constructor(private productService: ProductService) {}
 
-  // Parameters for the request
   settingSubject = new BehaviorSubject<Settings>({
     limit: 12,
     skip: 0,
   });
 
-  // State to track the total number of products
   totalProducts = 0;
 
   // Observable for accumulating products
   products$ = this.settingSubject.pipe(
-    // Stop the stream if we've fetched all products
+    // Stop the stream if we've fetched all products 
     takeWhile(
       ({ skip }) => this.totalProducts === 0 || skip < this.totalProducts,
-      true // Include the current emission before stopping
+      true 
     ),
-    // Process each setting to fetch products
+    
     concatMap((setting) =>
       this.productService.getProducts(setting).pipe(
         tap((data) => {
@@ -51,7 +49,6 @@ export class ProductsComponent {
         catchError(() => of([] as Product[]))
       )
     ),
-    // Accumulate products
     scan(
       (fetchedProducts: Product[], newProducts: Product[]) => [
         ...fetchedProducts,
