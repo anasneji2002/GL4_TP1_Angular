@@ -21,7 +21,17 @@ export class AddCvComponent {
     private router: Router,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.path?.disable();
+    this.age?.valueChanges.subscribe((age) => {
+      if (age && age < 18) {
+        this.path?.disable();
+        this.path?.setValue('');
+      } else {
+        this.path?.enable();
+      }
+    });
+  }
 
   form = this.formBuilder.group(
     {
