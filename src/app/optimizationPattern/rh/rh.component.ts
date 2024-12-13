@@ -11,12 +11,13 @@ import { UserListComponent } from '../user-list/user-list.component';
 })
 export class RhComponent implements OnInit {
   private userService = inject(UsersService);
+  private ngZone = inject(NgZone); 
 
   oddUsers: User[];
   evenUsers: User[];
   chart: any;
 
-  constructor(private ngZone: NgZone) {
+  constructor() {
     this.oddUsers = this.userService.getOddOrEven(true);
     this.evenUsers = this.userService.getOddOrEven();
   }
