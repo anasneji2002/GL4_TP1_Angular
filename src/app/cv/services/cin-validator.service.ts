@@ -31,22 +31,22 @@ export class CinValidatorService {
     };
   }
 
-  validateCinAgeCorrelation(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const cin = control.get('cin')?.value;
-      const age = control.get('age')?.value;
-      console.log('triiggeerreeefff');
-      if (!cin || !age) {
-        return null;
-      }
+//   validateCinAgeCorrelation(): ValidatorFn {
+//     return (control: AbstractControl): ValidationErrors | null => {
+//       const cin = control.get('cin')?.value;
+//       const age = control.get('age')?.value;
+//       console.log('triiggeerreeefff');
+//       if (!cin || !age) {
+//         return null;
+//       }
 
-      const firstTwoDigits = parseInt(cin.substring(0, 2), 10);
-      if (age >= 60 && (firstTwoDigits < 0 || firstTwoDigits > 19)) {
-        return { cinAgeCorrelation: true };
-      } else if (age < 60 && firstTwoDigits <= 19) {
-        return { cinAgeCorrelation: true };
-      }
-      return null;
-    };
-  }
+//       const firstTwoDigits = parseInt(cin.substring(0, 2), 10);
+//       if (age >= 60 && (firstTwoDigits < 0 || firstTwoDigits > 19)) {
+//         return { cinAgeCorrelation: true };
+//       } else if (age < 60 && firstTwoDigits <= 19) {
+//         return { cinAgeCorrelation: true };
+//       }
+//       return null;
+//     };
+//   }
 }
