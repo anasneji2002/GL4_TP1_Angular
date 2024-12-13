@@ -10,6 +10,8 @@ import { ToastrService } from "ngx-toastr";
 import { APP_ROUTES } from "src/config/routes.config";
 import { Cv } from "../model/cv";
 import { cinAgeValidator } from "./add-cv.validator";
+import { CinValidatorService } from "../services/cin-validator.service";
+
 
 @Component({
   selector: "app-add-cv",
@@ -21,7 +23,9 @@ export class AddCvComponent {
     private cvService: CvService,
     private router: Router,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cinValidator: CinValidatorService
+
   ) {
     this.path?.disable();
     this.age?.valueChanges.subscribe((age) => {
@@ -44,6 +48,8 @@ export class AddCvComponent {
         "",
         {
           validators: [Validators.required, Validators.pattern("[0-9]{8}")],
+          asyncValidators: [this.cinValidator.checkCinUnique()],
+          updateOn: 'blur'
         },
       ],
       age: [
