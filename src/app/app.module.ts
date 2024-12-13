@@ -51,6 +51,10 @@ import { ProductsComponent } from "./products/products.component";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { AutocompleteComponent } from "./cv/autocomplete/autocomplete.component";
 import { SliderComponent } from "./rxjs/slider/slider.component";
+import { StoreModule } from "@ngrx/store";
+import { addCvReducer,  } from "./cv/store/cv.reducer";
+import { StoreDevtoolsModule } from  "@ngrx/store-devtools";
+
 
 @NgModule({
   declarations: [
@@ -99,6 +103,12 @@ import { SliderComponent } from "./rxjs/slider/slider.component";
     ToastrModule.forRoot(), // ToastrModule added
     AppRoutingModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({}), 
+    StoreModule.forRoot({ addCv: addCvReducer }) ,  
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // max nbr of actions to keep in the history
+      logOnly: !isDevMode(), // Restrict extension to log-only mode
+    }),
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

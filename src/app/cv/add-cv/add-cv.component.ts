@@ -9,6 +9,11 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { APP_ROUTES } from "src/config/routes.config";
 import { Cv } from "../model/cv";
+import { Store } from "@ngrx/store";
+import { selectAddCv, selectCv } from "../store/cv.selectors";
+import { updateCv } from "../store/cv.actions";
+import { AddCvState } from "../store/cv.state";
+import { take } from "rxjs/operators";
 
 @Component({
   selector: "app-add-cv",
@@ -20,7 +25,8 @@ export class AddCvComponent {
     private cvService: CvService,
     private router: Router,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private store: Store<AddCvState>
   ) {
     this.path?.disable();
     this.age?.valueChanges.subscribe((age) => {
@@ -31,6 +37,15 @@ export class AddCvComponent {
         this.path?.enable();
       }
     });
+    this.store.select(selectCv).pipe(take(1)).subscribe((cv) => {
+      if (cv) {
+        this.form.patchValue(cv); // Populate the form with the CV data
+      }
+    });
+    this.form.valueChanges.subscribe((value) => {
+      this.store.dispatch(updateCv({ cv: value as Cv }));
+    });
+
   }
 
   form = this.formBuilder.group(
