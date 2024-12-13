@@ -2,14 +2,8 @@ import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@
 import {User} from "../users.service";
 import memo from 'memo-decorator';
 import { FormsModule } from '@angular/forms';
+import { FibonacciPipe } from '../../pipes/calculate.pipe';
 
-
-export const fibonnaci = (n: number): number => {
-  if (n==1 || n==0) {
-    return 1;
-  }
-  return fibonnaci(n-1) + fibonnaci(n-2);
-}
 
 @Component({
   selector: 'app-user-list',
@@ -17,7 +11,7 @@ export const fibonnaci = (n: number): number => {
   styleUrls: ['./user-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FormsModule]
+  imports: [FormsModule,FibonacciPipe ]
 })
 export class UserListComponent {
   @Input() usersCluster: string = '';
@@ -27,13 +21,5 @@ export class UserListComponent {
   addUser() {
     this.add.emit(this.userFullName);
     this.userFullName = '';
-  }
-
-  @memo()
-  fibo(n: number): number {
-    const fib = fibonnaci(n);
-    console.log({n, fib});
-
-    return fib;
   }
 }
