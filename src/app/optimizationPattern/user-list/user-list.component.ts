@@ -1,5 +1,6 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, NgZone} from '@angular/core';
 import {User} from "../users.service";
+import memo from 'memo-decorator';
 import { FormsModule } from '@angular/forms';
 
 
@@ -11,11 +12,12 @@ export const fibonnaci = (n: number): number => {
 }
 
 @Component({
-    selector: 'app-user-list',
-    templateUrl: './user-list.component.html',
-    styleUrls: ['./user-list.component.css'],
-    standalone: true,
-    imports: [FormsModule]
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [FormsModule]
 })
 export class UserListComponent {
   @Input() usersCluster: string = '';
@@ -26,6 +28,8 @@ export class UserListComponent {
     this.add.emit(this.userFullName);
     this.userFullName = '';
   }
+
+  @memo()
   fibo(n: number): number {
     const fib = fibonnaci(n);
     console.log({n, fib});
