@@ -26,4 +26,7 @@
     add cv
   </button>
 </form>
-{{ form.errors | json }}
+<div *ngIf="form.errors " class="alert alert-danger">
+  {{ form.errors | json }}
+</div>
+<!-- {{ form.errors | json }} -->
